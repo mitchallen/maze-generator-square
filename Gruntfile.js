@@ -41,9 +41,47 @@ module.exports = function (grunt) {
             }
         },
 
+        browserify: {
+            dist: {
+                options: {
+                    browserifyOptions: {
+                        standalone: 'MitchAllen.MazeGeneratorSquare'
+                    },
+                    transform: [['babelify', {presets: ['es2015']}]],
+                    plugin: [[ "browserify-derequire" ]]
+                },
+                files: {
+                   // if the source file has an extension of es6 then
+                   // we change the name of the source file accordingly.
+                   // The result file's extension is always .js
+                   "./dist/maze-generator-square.js": ["./modules/index.js"]
+                }
+            }
+        },
+
+        uglify: {
+            my_target: {
+                files: {
+                    './dist/maze-generator-square.min.js': ['./dist/maze-generator-square.js']
+                }
+            }
+        },
+
+        watch: {
+             scripts: {
+                files: ["./modules/*.js"],
+                tasks: ["browserify",'uglify']
+             }
+        }
     });
 
-    grunt.registerTask('default', ['jshint']);
-    grunt.registerTask('pubinit', ['jshint','shell:pubinit']);
-    grunt.registerTask('publish', ['jshint','bump','shell:publish']);
+    grunt.loadNpmTasks("grunt-browserify");
+    grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks("grunt-contrib-watch");
+
+    grunt.registerTask('default', ['jshint','browserify','uglify']);
+    grunt.registerTask('monitor', ['jshint','watch']);
+    grunt.registerTask("build", ['browserify','uglify']);
+    grunt.registerTask('pubinit', ['jshint','browserify','uglify','shell:pubinit']);
+    grunt.registerTask('publish', ['jshint','browserify','uglify','bump','shell:publish']);
 };
