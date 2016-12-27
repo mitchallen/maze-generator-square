@@ -13,8 +13,14 @@ var cgFactory = require("@mitchallen/connection-grid-square"),
 
 
 /**
+ * Maze generator core
+ * @module maze-generator-core
+ */
+
+/**
  * Square maze generator
  * @module maze-generator-square
+ * @augments module:maze-generator-core
  */
 
 /**
@@ -54,6 +60,7 @@ module.exports.create = (spec) => {
         /** 
           * Print a boarder to the console
           * @function
+          * @instance
           * @memberof module:maze-generator-square
           */
         printBorder: function() {
@@ -66,6 +73,7 @@ module.exports.create = (spec) => {
         },
         /** Print board to console
           * @function
+          * @instance
           * @memberof module:maze-generator-square
           */
         printBoard: function() {
