@@ -171,6 +171,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.2
+
+* fixed return issue in __create__ method
+
 #### Version 0.1.1 
 
 * added mac server script to browser example

@@ -13,17 +13,18 @@ var cgFactory = require("@mitchallen/connection-grid-square"),
 
 
 /**
- * Maze generator core
+ * Maze Generator Core {@link https://www.npmjs.com/package/@mitchallen/maze-generator-core|npm documentation}
  * @module maze-generator-core
  */
 
 /**
- * Square maze generator
+ * Square Maze Generator
  * @module maze-generator-square
  * @augments module:maze-generator-core
  */
 
 /**
+ * 
  * A module for generating square mazes
  * @module maze-generator-square-factory
  */
@@ -34,6 +35,11 @@ var cgFactory = require("@mitchallen/connection-grid-square"),
  * @param {number} options.x Width of the maze
  * @param {number} options.y Height of the maze
  * @returns {module:maze-generator-square}
+ * @example <caption>Example creating a maze-generator-square</caption>
+ * var mazeFactory = require("@mitchallen/maze-generator-square");
+ * let xSize = 5;
+ * let ySize = 6;
+ * var maze = mazeFactory.create({ x: xSize, y: ySize });
  */
 module.exports.create = (spec) => {
     
@@ -56,7 +62,7 @@ module.exports.create = (spec) => {
         grid: connections,
     });
 
-    return Object.assign( connections, {
+    return Object.assign( obj, {
         /** 
           * Print a boarder to the console
           * @function

@@ -12,6 +12,35 @@
 var cgFactory = _dereq_("@mitchallen/connection-grid-square"),
     baseGrid = _dereq_("@mitchallen/maze-generator-core");
 
+/**
+ * Maze Generator Core {@link https://www.npmjs.com/package/@mitchallen/maze-generator-core|npm documentation}
+ * @module maze-generator-core
+ */
+
+/**
+ * Square Maze Generator
+ * @module maze-generator-square
+ * @augments module:maze-generator-core
+ */
+
+/**
+ * 
+ * A module for generating square mazes
+ * @module maze-generator-square-factory
+ */
+
+/** 
+* Factory method that returns a square maze generator
+* @param {Object} options Named parameters for generating a square maze
+* @param {number} options.x Width of the maze
+* @param {number} options.y Height of the maze
+* @returns {module:maze-generator-square}
+* @example <caption>Example creating a maze-generator-square</caption>
+* var mazeFactory = require("@mitchallen/maze-generator-square");
+* let xSize = 5;
+* let ySize = 6;
+* var maze = mazeFactory.create({ x: xSize, y: ySize });
+*/
 module.exports.create = function (spec) {
 
     spec = spec || {};
@@ -33,7 +62,13 @@ module.exports.create = function (spec) {
         grid: connections
     });
 
-    return Object.assign(connections, {
+    return Object.assign(obj, {
+        /** 
+          * Print a boarder to the console
+          * @function
+          * @instance
+          * @memberof module:maze-generator-square
+          */
         printBorder: function printBorder() {
             var row = "";
             var lim = _x * 2;
@@ -42,6 +77,11 @@ module.exports.create = function (spec) {
             }
             console.log(row);
         },
+        /** Print board to console
+          * @function
+          * @instance
+          * @memberof module:maze-generator-square
+          */
         printBoard: function printBoard() {
             console.log("MAZE: %d, %d", _x, _y);
             this.printBorder();
