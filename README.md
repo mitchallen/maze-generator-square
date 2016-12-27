@@ -36,9 +36,9 @@ Example:
         <meta name="description" content="Maze Generator Square Example">
         <!-- either cdn should work -->
         <!--
-        <script src="https://cdn.rawgit.com/mitchallen/maze-generator-square/v0.1.1/dist/maze-generator-square.min.js"></script>
+        <script src="https://cdn.rawgit.com/mitchallen/maze-generator-square/v0.1.2/dist/maze-generator-square.min.js"></script>
         -->
-        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.1/dist/maze-generator-square.min.js"></script>
+        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.2/dist/maze-generator-square.min.js"></script>
         <script>
           var factory = window.MitchAllen.MazeGeneratorSquare;
           console.log(factory);
