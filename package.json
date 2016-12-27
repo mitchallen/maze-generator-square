@@ -14,7 +14,9 @@
     "test-square": "grunt &&  /usr/local/bin/mocha test/square/ --recursive --timeout 5000",
     "test-triangle": "grunt &&  /usr/local/bin/mocha test/triangle/ --recursive --timeout 5000",
     "test-debug": "grunt &&  /usr/local/bin/mocha -g '@DEBUG' --recursive --timeout 20000",
-    "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml"
+    "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml",
+    "build-doc": "jsdoc modules/index.js -d doc",
+    "mac-server": "python -m SimpleHTTPServer 8000"
   },
   "repository": {
     "type": "git",
