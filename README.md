@@ -14,7 +14,7 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 ## Usage
 
-   "use strict";
+    "use strict";
 
     var mazeFactory = require("@mitchallen/maze-generator-square");
 
@@ -223,6 +223,12 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.1.3
+
+* removed printBorder method
+* added jsdoc info
+* integrated jsdoc into README
 
 #### Version 0.1.2
 

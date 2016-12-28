@@ -15,7 +15,7 @@ You must use __npm__ __2.7.0__ or higher because of the scoped package name.
 
 ## Usage
 
-   "use strict";
+    "use strict";
 
     var mazeFactory = require("@mitchallen/maze-generator-square");
 
