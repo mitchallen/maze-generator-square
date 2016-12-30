@@ -1,8 +1,8 @@
-<!-- include (README-OPEN.md) -->
+@mitchallen/maze-generator-square
+==
+square maze generator
+--
 
-# @mitchallen/maze-generator-square
-## square maze generator
-* * *
 ## Installation
 
 You must use __npm__ __2.7.0__ or higher because of the scoped package name.
@@ -55,9 +55,9 @@ Example:
     </html>
     
 * * *
-<!-- /include -->
+
 # API Documentation
-<!-- include (DOC-API.md) -->
+
 ## Modules
 
 <dl>
@@ -160,9 +160,9 @@ var maze2 = mazeFactory.create( { x: 7, y: 20 } );
 maze1.generate();
 maze2.generate();
 ```
-<!-- /include -->
+
 * * *
-<!-- include (README-CLOSE.md) -->
+
 ## Additional Parent Methods
     
 ### maze.generate(spec = null);
@@ -223,6 +223,14 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.1.5
+
+* removed template based doc
+
+#### Version 0.1.4
+
+* fixed type-o in usage
 
 #### Version 0.1.3
 

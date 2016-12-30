@@ -1,7 +1,7 @@
 /**
     Module: @mitchallen/maze-generator-square/modules/index
     Author: Mitch Allen
-*/
+*/ 
 
 /*jshint node: true */
 /*jshint esversion: 6 */
