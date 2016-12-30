@@ -224,6 +224,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.6
+
+* updated core to 0.1.4
+
 #### Version 0.1.5
 
 * removed template based doc
