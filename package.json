@@ -15,7 +15,8 @@
     "test-triangle": "grunt &&  /usr/local/bin/mocha test/triangle/ --recursive --timeout 5000",
     "test-debug": "grunt &&  /usr/local/bin/mocha -g '@DEBUG' --recursive --timeout 20000",
     "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml",
-    "mac-server": "python -m SimpleHTTPServer 8000"
+    "//": "Usage:> [PORT=8002] npm run web-server",
+    "web-server": "python -m SimpleHTTPServer $PORT || 8000"
   },
   "repository": {
     "type": "git",
