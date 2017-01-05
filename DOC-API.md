@@ -23,6 +23,23 @@ Maze Generator Core [npm documentation](https://www.npmjs.com/package/@mitchalle
 Square Maze Generator
 
 **Extends:** <code>[maze-generator-core](#module_maze-generator-core)</code>  
+
+* [maze-generator-square](#module_maze-generator-square) ⇐ <code>[maze-generator-core](#module_maze-generator-core)</code>
+    * [.afterGenerate(spec)](#module_maze-generator-square+afterGenerate)
+    * [.printBoard()](#module_maze-generator-square+printBoard)
+
+<a name="module_maze-generator-square+afterGenerate"></a>
+
+### maze-generator-square.afterGenerate(spec)
+Called by base class after generate generates the maze.
+Not meant to be called directly.
+
+**Kind**: instance method of <code>[maze-generator-square](#module_maze-generator-square)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| spec | <code>Object</code> | Object containing named parameters passed through generate method. |
+
 <a name="module_maze-generator-square+printBoard"></a>
 
 ### maze-generator-square.printBoard()

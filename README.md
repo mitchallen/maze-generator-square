@@ -56,8 +56,6 @@ Example:
     
 * * *
 
-# API Documentation
-
 ## Modules
 
 <dl>
@@ -83,6 +81,23 @@ Maze Generator Core [npm documentation](https://www.npmjs.com/package/@mitchalle
 Square Maze Generator
 
 **Extends:** <code>[maze-generator-core](#module_maze-generator-core)</code>  
+
+* [maze-generator-square](#module_maze-generator-square) ⇐ <code>[maze-generator-core](#module_maze-generator-core)</code>
+    * [.afterGenerate(spec)](#module_maze-generator-square+afterGenerate)
+    * [.printBoard()](#module_maze-generator-square+printBoard)
+
+<a name="module_maze-generator-square+afterGenerate"></a>
+
+### maze-generator-square.afterGenerate(spec)
+Called by base class after generate generates the maze.
+Not meant to be called directly.
+
+**Kind**: instance method of <code>[maze-generator-square](#module_maze-generator-square)</code>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| spec | <code>Object</code> | Object containing named parameters passed through generate method. |
+
 <a name="module_maze-generator-square+printBoard"></a>
 
 ### maze-generator-square.printBoard()
@@ -163,43 +178,6 @@ maze2.generate();
 
 * * *
 
-## Additional Parent Methods
-    
-### maze.generate(spec = null);
-
-Generates a maze by filling a connection grid with connection info. 
-
-    maze.generate();
-    
-#### maze.generate(spec.mask = array)
-
-Generates a maze with masked off cells.
-
-    let spec = {
-        mask: [
-            { c: 2, r: 3 },
-            { c: 2, r: 4 }
-        ]
-    };
-    mazeGenerator.generate(spec);
-    
-#### maze.generate(spec.start = array)
-
-Generates a maze starting at a cell other than 0,0. Useful when you want to mask off 0,0.
-
-    let spec = {
-        start: { c: 3, r: 3 },
-        mask: [
-            { c: 0, r: 0 },
-            { c: 0, r: 1 },
-            { c: 1, r: 0 },
-            { c: 1, r: 1 }
-        ]
-    };
-    mazeGenerator.generate(spec);
-
-* * *
-
 ## Testing
 
 To test, go to the root folder and type (sans __$__):
@@ -223,6 +201,11 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.1.8
+
+* updated dependencies
+* added __afterGenerate__ method (work in progress)
 
 #### Version 0.1.7
 

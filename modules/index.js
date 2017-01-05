@@ -73,6 +73,50 @@ module.exports.create = (spec) => {
 
     return Object.assign( obj, {
 
+        /**
+          * Called by base class after generate generates the maze.
+          * Not meant to be called directly.
+          * @param {Object} spec Object containing named parameters passed through generate method.
+          * @function
+          * @instance
+          * @memberof module:maze-generator-square
+          */
+        afterGenerate: function(spec) {
+
+            spec = spec || {};
+            var aOpen = spec.open || [];
+
+            if( aOpen.length === 0 ) {
+                return;
+            }
+
+            var borders = ["N","E","W","S"];
+
+            for( var oKey in aOpen ) {
+                var open = aOpen[oKey];
+                if(borders.contains(open.border)) {
+
+                    var list = open.list;
+
+                    if(!list) {
+                        console.error("ERROR: open border requires list parameter.")
+                        continue;
+                    }
+
+                    for( var key in list ) {
+                        var id = parseInt(list[key],10);
+                        if( open.border === "N" ) {
+                            
+                        }
+                    }
+
+                } else {
+                    console.error("ERROR: open.border ('%s') not found", open.border );
+                }
+            }
+
+        },
+
         /** Print board to console. Review this method to discover how to draw a maze.
           * Drawing a square maze work like this:
           * <ul>
