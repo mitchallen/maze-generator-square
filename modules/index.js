@@ -75,11 +75,56 @@ module.exports.create = (spec) => {
 
         /**
           * Called by base class after generate generates the maze.
-          * Not meant to be called directly.
+          * Not meant to be called directly. The generate method will pass the spec on to this method.
           * @param {Object} spec Object containing named parameters passed through generate method.
+          * @param {Array} spec.open Array of objects specifying what borders to open
+          * @param {Object} spec.open[i]. Item containing info on how to open border
+          * @param {string} spec.open[i].border String representing border ("N","E","W","S")
+          * @param {number} spec.open[i].list[j]. Zero-based id along border designating which cell to open
           * @function
           * @instance
           * @memberof module:maze-generator-square
+          * @example <caption>open north border</caption>
+          * // calls generate to pass spec on to afterGenerate
+          * var xSize = 5, ySize = 6;
+          * var mazeGenerator = factory.create({ x: xSize, y: ySize });
+          * let spec = {
+          *     open: [
+          *         { border: "N", list: [0,2,xSize-1] }
+          *     ]
+          * };
+          * mazeGenerator.generate(spec);
+          * mazeGenerator.printBoard();
+          * // example output
+          *    __  __  
+          * | |  _  | |
+          * |___| |_  |
+          * |  _|   | |
+          * | |  _| | |
+          * | |_  |___|
+          * |_________|
+          * @example <caption>open all border</caption>
+          * // calls generate to pass spec on to afterGenerate
+          * var xSize = 5, ySize = 6;
+          * var mazeGenerator = factory.create({ x: xSize, y: ySize });
+          * let spec = {
+          *     open: [
+          *         { border: "N", list: [0,2,xSize-1] },
+          *         { border: "S", list: [0,2,xSize-1] },
+          *         { border: "E", list: [0,2,ySize-1] },
+          *         { border: "W", list: [0,2,ySize-1] }
+          *     ]
+          * };
+          * mazeGenerator.generate(spec);
+          * mazeGenerator.printBoard();
+          * // example output
+          *   __  __  
+          *  _  |   |  
+          * | | | |_  |
+          *   |___| |  
+          * |  _  |  _|
+          * |   |_|_  |
+          *   |_   _   
           */
         afterGenerate: function(spec) {
 
@@ -94,19 +139,28 @@ module.exports.create = (spec) => {
 
             for( var oKey in aOpen ) {
                 var open = aOpen[oKey];
-                if(borders.contains(open.border)) {
+                if(borders.indexOf(open.border) >= 0) {
 
                     var list = open.list;
 
                     if(!list) {
-                        console.error("ERROR: open border requires list parameter.")
+                        console.error("ERROR: open border requires list parameter.");
                         continue;
                     }
 
                     for( var key in list ) {
-                        var id = parseInt(list[key],10);
+                        var id = list[key];
                         if( open.border === "N" ) {
-                            
+                            this.open(id,0,"N");
+                        }
+                        if( open.border === "S" ) {
+                            this.open(id,_y - 1,"S");
+                        }
+                        if( open.border === "W" ) {
+                            this.open(0,id,"W");
+                        }
+                        if( open.border === "E" ) {
+                            this.open(_x - 1,id,"E");
                         }
                     }
 
@@ -132,7 +186,7 @@ module.exports.create = (spec) => {
           * @instance
           * @memberof module:maze-generator-square
           * @example <caption>console output</caption>
-              MAZE: 20, 20
+          * MAZE: 20, 20
      _______________________________________
     |_  |    ___  |___   _   _|  ___   _  | |
     | | | |___  | |   |_  |_____| |  _|  _| |
@@ -159,15 +213,19 @@ module.exports.create = (spec) => {
             console.log("MAZE: %d, %d", _x, _y);
             // print top north walls
             var border = "";
-            var lim = _x  * 2;
-            for( var i = 0; i < lim; i++ ) {
-                border += i === 0 ? " " : "_";
+            // var lim = _x  * 2;
+            // for( var i = 0; i < lim; i++ ) {
+            //     border += i === 0 ? " " : this.connects(i,0,"N") ? " " : "_";
+            // }
+            for( var i = 0; i < _x; i++ ) {
+                border += (i === 0 ? " " : "");
+                border += this.connects(i,0,"N") ? "  " : "__";
             }
             console.log( border );
             // print maze east and south walls
             let dirMap = this.dirMap;
             for(var y = 0; y < _y; y++) {
-                var row = "|";  // print west wall
+                var row = this.connects(0,y,"W") ? " " : "|"; 
                 for(var x = 0; x < _x; x++) {
                     row += this.connects( x, y, "S" ) ? " " : "_";
                     if(this.connects( x, y, "E" )) {

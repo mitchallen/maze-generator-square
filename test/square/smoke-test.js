@@ -202,4 +202,77 @@ describe('module', function() {
         mazeGenerator.printBoard();
         done();
     });
+
+    it('afterGenerate should open north border', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "N", list: [0,2,xSize-1] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should open south border', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "S", list: [0,2,xSize-1] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should open west border', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "W", list: [0,2,ySize-1] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should open east border', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "E", list: [0,2,ySize-1] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should open borders', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "N", list: [0,2,xSize-1] },
+                { border: "S", list: [0,2,xSize-1] },
+                { border: "E", list: [0,2,ySize-1] },
+                { border: "W", list: [0,2,ySize-1] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
 });

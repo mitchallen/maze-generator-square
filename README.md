@@ -90,14 +90,63 @@ Square Maze Generator
 
 ### maze-generator-square.afterGenerate(spec)
 Called by base class after generate generates the maze.
-Not meant to be called directly.
+Not meant to be called directly. The generate method will pass the spec on to this method.
 
 **Kind**: instance method of <code>[maze-generator-square](#module_maze-generator-square)</code>  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | spec | <code>Object</code> | Object containing named parameters passed through generate method. |
+| spec.open | <code>Array</code> | Array of objects specifying what borders to open |
+| spec.open[i]. | <code>Object</code> | Item containing info on how to open border |
+| spec.open[i].border | <code>string</code> | String representing border ("N","E","W","S") |
+| spec.open[i].list[j]. | <code>number</code> | Zero-based id along border designating which cell to open |
 
+**Example** *(open north border)*  
+```js
+// calls generate to pass spec on to afterGenerate
+var xSize = 5, ySize = 6;
+var mazeGenerator = factory.create({ x: xSize, y: ySize });
+let spec = {
+    open: [
+        { border: "N", list: [0,2,xSize-1] }
+    ]
+};
+mazeGenerator.generate(spec);
+mazeGenerator.printBoard();
+// example output
+   __  __  
+| |  _  | |
+|___| |_  |
+|  _|   | |
+| |  _| | |
+| |_  |___|
+|_________|
+```
+**Example** *(open all border)*  
+```js
+// calls generate to pass spec on to afterGenerate
+var xSize = 5, ySize = 6;
+var mazeGenerator = factory.create({ x: xSize, y: ySize });
+let spec = {
+    open: [
+        { border: "N", list: [0,2,xSize-1] },
+        { border: "S", list: [0,2,xSize-1] },
+        { border: "E", list: [0,2,ySize-1] },
+        { border: "W", list: [0,2,ySize-1] }
+    ]
+};
+mazeGenerator.generate(spec);
+mazeGenerator.printBoard();
+// example output
+  __  __  
+ _  |   |  
+| | | |_  |
+  |___| |  
+|  _  |  _|
+|   |_|_  |
+  |_   _   
+```
 <a name="module_maze-generator-square+printBoard"></a>
 
 ### maze-generator-square.printBoard()
@@ -116,7 +165,7 @@ Drawing a square maze work like this:
 **Kind**: instance method of <code>[maze-generator-square](#module_maze-generator-square)</code>  
 **Example** *(console output)*  
 ```js
-              MAZE: 20, 20
+MAZE: 20, 20
      _______________________________________
     |_  |    ___  |___   _   _|  ___   _  | |
     | | | |___  | |   |_  |_____| |  _|  _| |
@@ -201,6 +250,11 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Version 0.1.9
+
+* completed work on afterGenerate
+* added new open parameter option to __generate/afterGenerate__ to open maze borders
 
 #### Version 0.1.8
 
