@@ -17,6 +17,15 @@
       var sm = factory.create( { x: xSize, y: ySize } );
       console.log(sm);
       sm.generate();
+      sm.printBoard();
+      // open borders
+      var options = {
+        open: [
+          { border: "N", list: [0] },
+          { border: "S", list: [xSize-1] }
+        ]
+      };
+      sm.generate(options);
       sm.printBoard(); 
     </script>
   </head>
