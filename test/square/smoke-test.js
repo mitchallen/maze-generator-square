@@ -209,7 +209,21 @@ describe('module', function() {
         should.exist(mazeGenerator);
         let spec = {
             open: [
-                { border: "N", list: [0,2,xSize-1] }
+                { border: "N", list: [ 0, 2, xSize - 1 ] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should fail gracefully for open north border out of range', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "N", list: [ -1, 0, xSize - 1, xSize ] },
             ]
         };
         mazeGenerator.generate(spec);
@@ -223,7 +237,21 @@ describe('module', function() {
         should.exist(mazeGenerator);
         let spec = {
             open: [
-                { border: "S", list: [0,2,xSize-1] }
+                { border: "S", list: [ 0, 2, xSize - 1 ] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should fail gracefully for open south border out of range', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "S", list: [ -1, 0, xSize - 1, xSize ] }
             ]
         };
         mazeGenerator.generate(spec);
@@ -237,7 +265,7 @@ describe('module', function() {
         should.exist(mazeGenerator);
         let spec = {
             open: [
-                { border: "W", list: [0,2,ySize-1] }
+                { border: "W", list: [ 0, 2, ySize - 1]  }
             ]
         };
         mazeGenerator.generate(spec);
@@ -245,13 +273,30 @@ describe('module', function() {
         done();
     });
 
+
+
+    it('afterGenerate should fail gracefully for open west border out of range', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "W", list: [-1, 0 ,ySize - 1, ySize] }
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+
     it('afterGenerate should open east border', function(done) {
         var xSize = 5, ySize = 6;
         var mazeGenerator = _module.create({ x: xSize, y: ySize });
         should.exist(mazeGenerator);
         let spec = {
             open: [
-                { border: "E", list: [0,2,ySize-1] }
+                { border: "E", list: [ 0, 2, ySize - 1 ] }
             ]
         };
         mazeGenerator.generate(spec);

@@ -251,9 +251,13 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.10
+
+* __afterGenerate__ now fails gracefully for border parameters that are out of range.
+
 #### Version 0.1.9
 
-* completed work on afterGenerate
+* completed work on __afterGenerate__
 * added new open parameter option to __generate/afterGenerate__ to open maze borders
 
 #### Version 0.1.8
