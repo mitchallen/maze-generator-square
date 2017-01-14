@@ -6,3 +6,4 @@ examples
 support
 doc
 .gitignore
+.travis.yml
