@@ -6,14 +6,11 @@
   "scripts": {
     "//": "To use: npm run test-nodemon (assumes global location of mocha)",
     "start": "node dist/maze-generator-square.js",
-    "test": "grunt && /usr/local/bin/mocha --recursive --timeout 20000",
+    "test": "grunt && mocha --recursive --timeout 20000",
+    "test-coverage": "./node_modules/.bin/istanbul cover _mocha -- -R spec test/**/*",
     "test-nodemon": "nodemon /usr/local/bin/mocha --recursive --timeout 5000",
-    "test-create": "grunt && /usr/local/bin/mocha test/create/ --recursive --timeout 5000",
-    "test-circle": "grunt &&  /usr/local/bin/mocha test/circle/ --recursive --timeout 5000",
-    "test-hexagon": "grunt &&  /usr/local/bin/mocha test/hexagon/ --recursive --timeout 5000",
-    "test-square": "grunt &&  /usr/local/bin/mocha test/square/ --recursive --timeout 5000",
-    "test-triangle": "grunt &&  /usr/local/bin/mocha test/triangle/ --recursive --timeout 5000",
-    "test-debug": "grunt &&  /usr/local/bin/mocha -g '@DEBUG' --recursive --timeout 20000",
+    "test-square": "grunt && mocha test/square/ --recursive --timeout 5000",
+    "test-debug": "grunt && mocha -g '@DEBUG' --recursive --timeout 20000",
     "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml",
     "//": "Usage:> [PORT=8002] npm run web-server",
     "web-server": "python -m SimpleHTTPServer $PORT || 8000"
@@ -25,7 +22,7 @@
   "author": "Mitch Allen <npm@mitchallen.com> (http://mitchallen.com)",
   "license": "ISC",
   "dependencies": {
-    "@mitchallen/connection-grid-square": "^0.1.6",
+    "@mitchallen/connection-grid-square": "^0.1.8",
     "@mitchallen/maze-generator-core": "^0.1.5"
   },
   "devDependencies": {
@@ -40,6 +37,8 @@
     "grunt-contrib-watch": "^1.0.0",
     "grunt-jsdoc-to-markdown": "^2.0.0",
     "grunt-shell": "^1.3.0",
+    "istanbul": "^0.4.5",
+    "mocha": "^3.2.0",
     "should": "^10.0.0",
     "supertest": "^2.0.0"
   }

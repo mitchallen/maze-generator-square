@@ -11,7 +11,8 @@
 
 var request = require('supertest'),
     should = require('should'),
-    modulePath = "../../dist/maze-generator-square";
+    // modulePath = "../../dist/maze-generator-square";
+    modulePath = "../../modules/index";
 
 describe('module', function() {
 

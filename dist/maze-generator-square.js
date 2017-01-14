@@ -305,10 +305,6 @@ module.exports.create = function (spec) {
         y: _y
     });
 
-    if (!_grid) {
-        return null;
-    }
-
     _grid.fill(0);
 
     var _dirMap = {
@@ -850,9 +846,6 @@ module.exports.create = function (spec) {
 
     var _array = [];
     while (_array.push([]) < _rows) {}
-    if (!_array) {
-        return null;
-    }
 
     var obj = Object.create({}, {
         "rows": {

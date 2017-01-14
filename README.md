@@ -3,6 +3,26 @@
 square maze generator
 --
 
+<p align="left">
+
+  <a href="https://travis-ci.org/mitchallen/maze-generator-square">
+    <img src="https://img.shields.io/travis/mitchallen/maze-generator-square.svg?style=flat-square" alt="Version">
+  </a>
+  
+  <a href="https://codecov.io/gh/mitchallen/maze-generator-square">
+    <img src="https://codecov.io/gh/mitchallen/maze-generator-square/branch/master/graph/badge.svg" alt="Coverage Status">
+  </a>
+  
+  <a href="https://npmjs.org/package/@mitchallen/maze-generator-square">
+    <img src="http://img.shields.io/npm/v/@mitchallen/maze-generator-square.svg?style=flat-square" alt="Version">
+  </a>
+  
+  <a href="https://npmjs.org/package/@mitchallen/maze-generator-square">
+    <img src="https://img.shields.io/github/license/mitchallen/maze-generator-square.svg">
+  </a>
+  
+</p>
+
 ## Installation
 
 You must use __npm__ __2.7.0__ or higher because of the scoped package name.
