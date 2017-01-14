@@ -232,6 +232,48 @@ describe('module', function() {
         done();
     });
 
+    it('afterGenerate should fail gracefully if open object missing list property', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "N" },
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should fail gracefully for open object missing border property', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { list: [ -1, 0, xSize - 1, xSize ] },
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
+    it('afterGenerate should fail gracefully for non-existant open border', function(done) {
+        var xSize = 5, ySize = 6;
+        var mazeGenerator = _module.create({ x: xSize, y: ySize });
+        should.exist(mazeGenerator);
+        let spec = {
+            open: [
+                { border: "X", list: [ -1, 0, xSize - 1, xSize ] },
+            ]
+        };
+        mazeGenerator.generate(spec);
+        mazeGenerator.printBoard();
+        done();
+    });
+
     it('afterGenerate should open south border', function(done) {
         var xSize = 5, ySize = 6;
         var mazeGenerator = _module.create({ x: xSize, y: ySize });

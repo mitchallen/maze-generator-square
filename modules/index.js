@@ -63,9 +63,6 @@ module.exports.create = (spec) => {
     };
 
     var connections = cgFactory.create(_gridSpec);
-    if(!connections) {
-        return null;
-    }
 
     var obj = baseGrid.create( {
         grid: connections,

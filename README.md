@@ -271,6 +271,14 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.11
+
+* integrated travis-ci and codecov.io
+* updated test cases for 100% coverage
+* updated .npmignore 
+* change license to MIT
+* updated dependencies
+
 #### Version 0.1.10
 
 * __afterGenerate__ now fails gracefully for border parameters that are out of range.

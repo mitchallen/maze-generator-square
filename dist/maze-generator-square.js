@@ -63,9 +63,6 @@ module.exports.create = function (spec) {
     };
 
     var connections = cgFactory.create(_gridSpec);
-    if (!connections) {
-        return null;
-    }
 
     var obj = baseGrid.create({
         grid: connections
@@ -1005,7 +1002,7 @@ module.exports.create = function (spec) {
 
         /**
           * Method called after [generate]{@link module:maze-generator-core#generate} generates a maze.
-          * <b>This should be overriden by base class</b>.
+          * <b>This should be overriden by derived class</b>.
           * The spec parameter will be passed on to this method after the maze has been generated.
           * The derived method should parse spec for needed values.
           * @param {Object} spec Named parameters for method
