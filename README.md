@@ -55,9 +55,9 @@ Example:
         <meta name="description" content="Maze Generator Square Example">
         <!-- either cdn should work -->
         <!--
-        <script src="https://cdn.rawgit.com/mitchallen/maze-generator-square/v0.1.2/dist/maze-generator-square.min.js"></script>
+        <script src="https://cdn.rawgit.com/mitchallen/maze-generator-square/v0.1.12/dist/maze-generator-square.min.js"></script>
         -->
-        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.2/dist/maze-generator-square.min.js"></script>
+        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.12/dist/maze-generator-square.min.js"></script>
         <script>
           var factory = window.MitchAllen.MazeGeneratorSquare;
           console.log(factory);
@@ -271,6 +271,11 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 
 ## Version History
 
+#### Version 0.1.12
+
+* updated dependencies
+* updated client example
+
 #### Version 0.1.11
 
 * integrated travis-ci and codecov.io
@@ -328,5 +333,4 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * initial release
 
 * * *
-<!-- /include -->
 
