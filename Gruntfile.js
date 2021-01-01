@@ -17,7 +17,7 @@ module.exports = function (grunt) {
             options: {
                 node: true
             },
-            all: ['*.js','modules/*.js']
+            all: ['*.js','src/*.js']
         },
 
         shell: {
@@ -73,14 +73,14 @@ module.exports = function (grunt) {
 
         watch: {
              scripts: {
-                files: ["./modules/*.js"],
+                files: ["./src/*.js"],
                 tasks: ["browserify",'uglify']
              }
         },
 
         jsdoc2md: {
               oneOutputFile: {
-                src: 'modules/*.js',
+                src: 'src/*.js',
                 dest: 'DOC-API.md'
               }
               // separateOutputFilePerInput: {

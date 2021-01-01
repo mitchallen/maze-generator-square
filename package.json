@@ -4,7 +4,7 @@
   "description": "square maze generator",
   "main": "dist/maze-generator-square.js",
   "scripts": {
-    "//": "To use: npm run test-nodemon (assumes global location of mocha)",
+    "//": "Usage:> [PORT=8002] npm run web-server",
     "start": "node dist/maze-generator-square.js",
     "test": "grunt && mocha --recursive --timeout 20000",
     "test-coverage": "./node_modules/.bin/istanbul cover _mocha -- -R spec test/**/*",
@@ -12,7 +12,6 @@
     "test-square": "grunt && mocha test/square/ --recursive --timeout 5000",
     "test-debug": "grunt && mocha -g '@DEBUG' --recursive --timeout 20000",
     "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml",
-    "//": "Usage:> [PORT=8002] npm run web-server",
     "web-server": "python -m SimpleHTTPServer $PORT || 8000"
   },
   "repository": {
@@ -22,8 +21,8 @@
   "author": "Mitch Allen <npm@mitchallen.com> (http://mitchallen.com)",
   "license": "MIT",
   "dependencies": {
-    "@mitchallen/connection-grid-square": "^0.1.9",
-    "@mitchallen/maze-generator-core": "^0.1.7"
+    "@mitchallen/connection-grid-square": "^0.1.10",
+    "@mitchallen/maze-generator-core": "^0.1.9"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.18.0",

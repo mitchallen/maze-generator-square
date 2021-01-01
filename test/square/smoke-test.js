@@ -12,7 +12,7 @@
 var request = require('supertest'),
     should = require('should'),
     // modulePath = "../../dist/maze-generator-square";
-    modulePath = "../../modules/index";
+    modulePath = "../../src/index";
 
 describe('module', function() {
 
@@ -363,4 +363,14 @@ describe('module', function() {
         mazeGenerator.printBoard();
         done();
     });
+
+    it('getMaxDistance for maze', function(done) {
+      var mazeGenerator = _module.create({ x: 20, y: 20 });
+      should.exist(mazeGenerator);
+      mazeGenerator.generate();
+      let d = mazeGenerator.getMaxDistance(0,0);
+      mazeGenerator.printBoard({ target: d } );
+      console.log(d);
+      done();
+  });
 });

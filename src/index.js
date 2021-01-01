@@ -214,8 +214,12 @@ module.exports.create = (spec) => {
     | |  ___| |   | | |  _| | |_  | | |___| |
     |___|_______|_____|_______|_____|_______|
           */
-        printBoard: function() {
+        printBoard: function(spec = {}) {
             console.log("MAZE: %d, %d", _x, _y);
+            let { target = {} } = spec;
+            let { x = -1, y = -1 } = target;
+            let tX = x;
+            let tY = y;
             // print top north walls
             var border = "";
             // var lim = _x  * 2;
@@ -229,12 +233,13 @@ module.exports.create = (spec) => {
             console.log( border );
             // print maze east and south walls
             let dirMap = this.dirMap;
-            for(var y = 0; y < _y; y++) {
-                var row = this.connects(0,y,"W") ? " " : "|"; 
-                for(var x = 0; x < _x; x++) {
-                    row += this.connects( x, y, "S" ) ? " " : "_";
-                    if(this.connects( x, y, "E" )) {
-                        row += ( ( ( this.get(x,y) | this.get(x+1,y) ) & dirMap.S ) !== 0) ? " " : "_";
+            for(var my = 0; my < _y; my++) {
+                var row = this.connects(0,my,"W") ? " " : "|"; 
+                for(var mx = 0; mx < _x; mx++) {
+                    let floor = (tX < 0 && tY < 0 ) ? "_" : ( tX == mx && tY == my ) ? "\u23C2" : "_";
+                    row += this.connects( mx, my, "S" ) ? " " : floor ;
+                    if(this.connects( mx, my, "E" )) {
+                        row += ( ( ( this.get(mx,my) | this.get(mx+1,my) ) & dirMap.S ) !== 0) ? " " : "_";
                     } else {
                         row += "|";
                     }
