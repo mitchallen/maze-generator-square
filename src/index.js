@@ -217,9 +217,7 @@ module.exports.create = (spec) => {
         printBoard: function(spec = {}) {
             console.log("MAZE: %d, %d", _x, _y);
             let { target = {} } = spec;
-            let { x = -1, y = -1 } = target;
-            let tX = x;
-            let tY = y;
+            let { x: tX = -1, y: tY = -1 } = target;
             // print top north walls
             var border = "";
             // var lim = _x  * 2;
