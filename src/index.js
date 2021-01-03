@@ -50,19 +50,14 @@ var cgFactory = require("@mitchallen/connection-grid-square"),
 * maze1.generate();
 * maze2.generate();
 */
-module.exports.create = (spec) => {
+module.exports.create = (spec = {}) => {
 
-  spec = spec || {};
+  let {
+    x: _x = 0,
+    y: _y = 0,
+  } = spec;
 
-  let _x = spec.x || 0;
-  let _y = spec.y || 0;
-
-  let _gridSpec = {
-    x: _x,
-    y: _y
-  };
-
-  var connections = cgFactory.create(_gridSpec);
+  var connections = cgFactory.create(spec);
 
   var obj = baseGrid.create({
     grid: connections,
@@ -123,10 +118,11 @@ module.exports.create = (spec) => {
       * |   |_|_  |
       *   |_   _   
       */
-    afterGenerate: function (spec) {
+    afterGenerate: function (spec = {}) {
 
-      spec = spec || {};
-      var aOpen = spec.open || [];
+      let {
+        open: aOpen = [],
+      } = spec;
 
       if (aOpen.length === 0) {
         return;
