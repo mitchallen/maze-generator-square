@@ -274,6 +274,20 @@ module.exports.create = function (spec) {
     mask: function mask(x, y) {
       return this.set(x, y, this.get(x, y) | MASKED);
     },
+    /** Clear the mask flag from cell at x,y.
+      * Useful for maze generators to mark and clear cells to skip
+      * @param {number} x The x coordinate
+      * @param {number} y The y coordinate
+      * @function
+      * @instance
+      * @returns {boolean}
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * core.clearMask(1,2)
+     */
+    clearMask: function clearMask(x, y) {
+      return this.set(x, y, this.get(x, y) & ~MASKED);
+    },
     /** Returns true if a cell at x,y has been marked using [mask]{@link module:connection-grid-core#mask}.
       * @param {number} x The x coordinate
       * @param {number} y The y coordinate
@@ -323,6 +337,7 @@ module.exports.create = function (spec) {
       }
       return false;
     },
+
     /** Maps a connection for a cell at x,y in a particular direction.
       * Unlike [connect]{@link module:connection-grid-core#connect} a cell in the direction does not have to exist.
       * Useful for mazes that need to open up border walls.
@@ -342,6 +357,26 @@ module.exports.create = function (spec) {
       }
       return this.set(x, y, this.get(x, y) | _DIR_MAP[dir]);
     },
+
+    /** Removes a connection for a cell at x,y in a particular direction.
+      * Unlike [connect]{@link module:connection-grid-core#connect} a cell in the direction does not have to exist.
+      * @param {number} x The x coordinate
+      * @param {number} y The y coordinate
+      * @param {string} dir A string representing a direction
+      * @function
+      * @instance
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * core.close(0,0,"N");
+     */
+    close: function close(x, y, dir) {
+      // dir must be string
+      if (!this.isDir(dir)) {
+        return false;
+      }
+      return this.set(x, y, this.get(x, y) & ~_DIR_MAP[dir]);
+    },
+
     /** Maps a connection for a cell at x,y in a particular direction.
       * Returns false if the cell in the target direction does not exist.
       * @param {number} x The x coordinate
@@ -360,6 +395,25 @@ module.exports.create = function (spec) {
       if (!this.getNeighbor(x, y, dir)) return false;
       return this.open(x, y, dir);
     },
+    /** Removes connection for a cell at x,y in a particular direction.
+      * Returns false if the cell in the target direction does not exist.
+      * @param {number} x The x coordinate
+      * @param {number} y The y coordinate
+      * @param {string} dir A string representing a direction
+      * @function
+      * @instance
+      * @returns {boolean}
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * if(core.disconnect(1,2,"N")) ...
+     */
+    disconnect: function disconnect(x, y, dir) {
+      // dir must be string
+      // Disconnect cell from neighbor (one way)}
+      if (!this.getNeighbor(x, y, dir)) return false;
+      return this.close(x, y, dir);
+    },
+
     /** Maps a connection for a cell at x,y in a particular direction.
       * Also maps a connection from the target cell back to the source cell.
       * Returns false if the cell in the target direction does not exist.
@@ -384,6 +438,32 @@ module.exports.create = function (spec) {
       }
       return true;
     },
+
+    /** Removes a connection for a cell at x,y in a particular direction.
+      * Also removes a connection from the target cell back from the source cell.
+      * Returns false if the cell in the target direction does not exist.
+      * @param {number} x The x coordinate
+      * @param {number} y The y coordinate
+      * @param {string} dir A string representing a direction
+      * @function
+      * @instance
+      * @returns {boolean}
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * if(core.disconnectUndirected(1,2,"N")) ...
+     */
+    disconnectUndirected: function disconnectUndirected(x, y, sDir) {
+      // dir must be a string
+      if (!this.disconnect(x, y, sDir)) {
+        return false;
+      }
+      var n = this.getNeighbor(x, y, sDir);
+      if (!this.disconnect(n.x, n.y, _OPPOSITE[sDir])) {
+        return false;
+      }
+      return true;
+    },
+
     /** Returns true if a cell connects to a neighbor cell in a particular direction.
       * It does not matter if a the target cell exists such as when [open]{@link module:connection-grid-core#open} maps a connection to a non-existant cell.
       * @param {number} x The x coordinate
@@ -569,7 +649,7 @@ module.exports.create = function (spec) {
       return connections;
     },
 
-    /** Returns true or false if cell is a dead end (only one connection)
+    /** Returns true or false if cell is a dead end / leaf node (only one connection)
       * @param {number} x The x coordinate
       * @param {number} y The y coordinate
       * @function
@@ -577,10 +657,59 @@ module.exports.create = function (spec) {
       * @returns {boolean}
       * @memberof module:connection-grid-core
       * @example <caption>usage</caption>
-      * let flag = core.isDeadEnd(1,2)
+      * let flag = core.isLeaf(1,2);
       */
-    isDeadEnd: function isDeadEnd(x, y) {
+    isLeaf: function isLeaf(x, y) {
       return this.connectionCount(x, y) == 1;
+    },
+
+    /** Clears all connections and flags from cell 
+      * @param {number} x The x coordinate
+      * @param {number} y The y coordinate
+      * @function
+      * @instance
+      * @returns {boolean}
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * let isCell = core.reset(1,2);
+      */
+    reset: function reset(x, y) {
+      if (!this.isCell(x, y)) {
+        return false;
+      }
+      var list = this.getNeighborDirs(x, y);
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = list[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var sDir = _step3.value;
+
+          if (!this.isDir(sDir)) {
+            console.error(".reset unknown direction: ", sDir);
+            return false;
+          }
+          this.disconnectUndirected(x, y, sDir);
+        }
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      this.clearMask(x, y);
+      this.clearVisited(x, y);
+      return true;
     }
   });
 };
@@ -591,9 +720,11 @@ module.exports.create = function (spec) {
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],2:[function(_dereq_,module,exports){
 (function (global){(function (){
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.MitchAllen || (g.MitchAllen = {})).GridSquare = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.MitchAllen || (g.MitchAllen = {})).GridSquare = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof _dereq_&&_dereq_;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof _dereq_&&_dereq_,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
+(function (global){(function (){
+(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.MitchAllen || (g.MitchAllen = {})).GridCore = f()}})(function(){var define,module,exports;return (function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof _dereq_&&_dereq_;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof _dereq_&&_dereq_,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(_dereq_,module,exports){
 /**
-    Module: @mitchallen/grid-square/modules/index.js
+    Module: @mitchallen/grid-core/src/index.js
     Author: Mitch Allen
 */
 
@@ -602,60 +733,11 @@ module.exports.create = function (spec) {
 
 "use strict";
 
-var coreGrid = _dereq_('@mitchallen/grid-core');
+module.exports.create = function () {
+    var spec = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
 
-module.exports.create = function (spec) {
-
-    spec = spec || {};
-
-    var _x = spec.x || 0;
-    var _y = spec.y || 0;
-
-    _x = Math.max(_x, 0);
-    _y = Math.max(_y, 0);
-
-    var obj = coreGrid.create({ rows: _x });
-
-    for (var row = 0; row < _x; row++) {
-        for (var col = 0; col < _y; col++) {
-            obj.set(row, col, 0);
-        }
-    }
-
-    Object.defineProperties(obj, {
-        "xSize": {
-            writeable: false,
-            value: _x,
-            enumerable: true
-        },
-        "ySize": {
-            writeable: false,
-            value: _y,
-            enumerable: true
-        }
-    });
-
-    return obj;
-};
-
-},{"@mitchallen/grid-core":2}],2:[function(_dereq_,module,exports){
-(function (global){
-(function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}(g.MitchAllen || (g.MitchAllen = {})).GridCore = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof _dereq_=="function"&&_dereq_;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof _dereq_=="function"&&_dereq_;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
-/**
-    Module: @mitchallen/grid-core/modules/index.js
-    Author: Mitch Allen
-*/
-
-/*jshint node: true */
-/*jshint esversion: 6 */
-
-"use strict";
-
-module.exports.create = function (spec) {
-
-    spec = spec || {};
-
-    var _rows = spec.rows || 0;
+    var _spec$rows = spec.rows,
+        _rows = _spec$rows === undefined ? 0 : _spec$rows;
 
     _rows = Math.max(_rows, 0);
 
@@ -723,9 +805,59 @@ module.exports.create = function (spec) {
 
 },{}]},{},[1])(1)
 });
-}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}]},{},[1])(1)
+
+}).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
+},{}],2:[function(_dereq_,module,exports){
+/**
+    Module: @mitchallen/grid-square/src/index.js
+    Author: Mitch Allen
+*/
+
+/*jshint node: true */
+/*jshint esversion: 6 */
+
+"use strict";
+
+var coreGrid = _dereq_('@mitchallen/grid-core');
+
+module.exports.create = function () {
+    var spec = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+
+    var _spec$x = spec.x,
+        _x = _spec$x === undefined ? 0 : _spec$x,
+        _spec$y = spec.y,
+        _y = _spec$y === undefined ? 0 : _spec$y;
+
+    _x = Math.max(_x, 0);
+    _y = Math.max(_y, 0);
+
+    var obj = coreGrid.create({ rows: _x });
+
+    for (var row = 0; row < _x; row++) {
+        for (var col = 0; col < _y; col++) {
+            obj.set(row, col, 0);
+        }
+    }
+
+    Object.defineProperties(obj, {
+        "xSize": {
+            writeable: false,
+            value: _x,
+            enumerable: true
+        },
+        "ySize": {
+            writeable: false,
+            value: _y,
+            enumerable: true
+        }
+    });
+
+    return obj;
+};
+
+},{"@mitchallen/grid-core":1}]},{},[2])(2)
 });
+
 }).call(this)}).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 },{}],3:[function(_dereq_,module,exports){
 /**
