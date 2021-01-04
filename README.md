@@ -56,7 +56,7 @@ Example:
         <meta charset="utf-8">
         <title>Maze Generator Square Example</title>
         <meta name="description" content="Maze Generator Square Example">
-        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.15/dist/maze-generator-square.min.js"></script>
+        <script src="https://unpkg.com/@mitchallen/maze-generator-square@0.1.16/dist/maze-generator-square.min.js"></script>
         <script>
           var factory = window.MitchAllen.MazeGeneratorSquare;
           console.log(factory);
@@ -105,6 +105,10 @@ Add unit tests for any new or changed functionality. Lint and test your code.
 * * *
 
 ## Version History
+
+#### Verion 0.1.16
+
+* Fixed broken build due to folder change
 
 #### Version 0.1.12
 
