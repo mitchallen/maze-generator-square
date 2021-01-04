@@ -383,4 +383,38 @@ describe('module', function () {
     console.log('\ntarget: ', d, '\n');
     done();
   });
+
+  it('solve for maze corner to corner', function (done) {
+    let size = { x: 9, y: 9 }
+    var mazeGenerator = _module.create(size);
+    should.exist(mazeGenerator);
+    mazeGenerator.generate();
+    let { x, y } = size;
+    let d = { x: x - 1, y: y - 1 };
+    mazeGenerator.printBoard({ target: d });
+    console.log('\ntarget: ', d, '\n');
+    let points = [
+      { x: 0, y: 0 },
+      { x: d.x, y: d.y },
+    ];
+    mazeGenerator.solve(points);
+    mazeGenerator.printBoard({ target: d });
+    done();
+  });
+
+  it('solve getMaxDistance for maze', function (done) {
+    var mazeGenerator = _module.create({ x: 9, y: 9 });
+    should.exist(mazeGenerator);
+    mazeGenerator.generate();
+    let d = mazeGenerator.getMaxDistance(0, 0);
+    mazeGenerator.printBoard({ target: d });
+    console.log('\ntarget: ', d, '\n');
+    let points = [
+      { x: 0, y: 0 },
+      { x: d.x, y: d.y },
+    ];
+    mazeGenerator.solve(points);
+    mazeGenerator.printBoard({ target: d });
+    done();
+  });
 });

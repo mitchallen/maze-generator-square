@@ -1202,125 +1202,267 @@ module.exports.create = function () {
 
 module.exports.create = function (spec) {
 
-    spec = spec || {};
-    var _grid = spec.grid;
+  spec = spec || {};
+  var _grid = spec.grid;
 
-    if (!_grid) {
-        return null;
-    }
+  if (!_grid) {
+    return null;
+  }
 
-    return Object.assign(_grid, {
+  return Object.assign(_grid, {
 
-        // leave undocumented for now
-        carveMaze: function carveMaze(x, y, depth, maxDepth) {
+    solve: function solve(points) {
+      if (points.length < 1) return;
+      var _points$ = points[0],
+          startX = _points$.x,
+          startY = _points$.y;
+      var _iteratorNormalCompletion = true;
+      var _didIteratorError = false;
+      var _iteratorError = undefined;
 
-            if (depth >= maxDepth) {
-                console.warn("MAXIMUM DEPTH REACHED: %d", maxDepth);
-                return;
-            }
+      try {
+        for (var _iterator = points[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+          var point = _step.value;
+          var _point$x = point.x,
+              x = _point$x === undefined ? -1 : _point$x,
+              _point$y = point.y,
+              y = _point$y === undefined ? -1 : _point$y;
 
-            if (!this.isCell(x, y)) {
-                return;
-            }
-            var dirs = this.getShuffledNeighborDirs(x, y);
-            for (var key in dirs) {
-                var sDir = dirs[key];
-                var n = this.getNeighbor(x, y, sDir);
-                if (n === null) {
-                    continue;
-                }
-
-                if (this.isMasked(n.x, n.y)) {
-                    continue;
-                }
-
-                if (this.isCell(n.x, n.y) && !this.hasConnections(n.x, n.y)) {
-                    // Connect cell to neighbor
-                    this.connectUndirected(x, y, sDir);
-                    this.carveMaze(n.x, n.y, depth + 1, maxDepth);
-                }
-            }
-        },
-
-        /**
-          * Method called after [generate]{@link module:maze-generator-core#generate} generates a maze.
-          * <b>This should be overriden by derived class</b>.
-          * The spec parameter will be passed on to this method after the maze has been generated.
-          * The derived method should parse spec for needed values.
-          * @param {Object} spec Named parameters for method
-          * @function
-          * @instance
-          * @memberof module:maze-generator-core
-          * @example <caption>possible usage</caption>
-          * // A derived object would have an afterGenerate method that parses spec.open
-          * let spec = {
-          *    open: [
-          *      { border: "N", list: [ 0, 2 ] },
-          *      { border: "S", list: [ 3 ] }
-          *    ]
-          * };
-          * mazeGenerator.generate(spec);
-          */
-        afterGenerate: function afterGenerate(spec) {
-            // derived class should override
-        },
-
-        /** Generators a maze
-          * @param {Object} options Named parameters for generating a maze
-          * @param {Array} options.mask An array of cells to mask off from maze generation
-          * @param {Array} options.open An array of objects designation what borders to open after generation
-          * @param {Object} opions.start An object containing the x and y parameter of a cell to start maze generation from.
-          * @function
-          * @instance
-          * @memberof module:maze-generator-core
-          * @returns {boolean}
-          * @example <caption>generate</caption>
-          * maze.generate();
-          * @example <caption>mask</caption>
-          * let spec = {
-          *    mask: [
-          *      { c: 2, r: 3 },
-          *      { c: 2, r: 4 }
-          *    ]
-          * };
-          * mazeGenerator.generate(spec);
-          * @example <caption>start and mask</caption>
-          * let spec = {
-          *    start: { c: 3, r: 3 },
-          *    mask: [
-          *      { c: 0, r: 0 },
-          *      { c: 0, r: 1 },
-          *      { c: 1, r: 0 },
-          *      { c: 1, r: 1 }
-          *    ]
-          * };
-          * mazeGenerator.generate(spec);
-          */
-        generate: function generate(spec) {
-
-            spec = spec || {};
-
-            var aMask = spec.mask || [],
-                start = spec.start || {},
-                x = start.c || 0,
-                y = start.r || 0;
-
-            this.fill(0);
-
-            for (var mKey in aMask) {
-                var mask = aMask[mKey];
-                this.mask(mask.c, mask.r);
-            }
-
-            var maxDepth = this.xSize * this.ySize;
-
-            this.carveMaze(x, y, 0, maxDepth);
-
-            // derived class can parse extra spec parameters
-
-            this.afterGenerate(spec);
+          this.markGreen(x, y);
         }
-    });
+      } catch (err) {
+        _didIteratorError = true;
+        _iteratorError = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion && _iterator.return) {
+            _iterator.return();
+          }
+        } finally {
+          if (_didIteratorError) {
+            throw _iteratorError;
+          }
+        }
+      }
+
+      var maxDepth = this.xSize * this.ySize;
+      this.clearAllVisited();
+      this.solveNode(startX, startY, 0, maxDepth);
+    },
+
+    solveNode: function solveNode(x, y, depth, maxDepth) {
+
+      if (depth >= maxDepth) {
+        console.warn("MAXIMUM DEPTH REACHED: %d", maxDepth);
+        return;
+      }
+
+      if (this.isLeaf(x, y) && !this.isGreen(x, y)) {
+        this.markRed(x, y);
+        return;
+      }
+
+      if (this.visited(x, y)) return;
+      if (this.markVisited(x, y)) ;
+
+      var dirs = this.getShuffledNeighborDirs(x, y);
+
+      var _iteratorNormalCompletion2 = true;
+      var _didIteratorError2 = false;
+      var _iteratorError2 = undefined;
+
+      try {
+        for (var _iterator2 = dirs[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+          var sDir = _step2.value;
+
+          var n = this.getNeighbor(x, y, sDir);
+          if (n === null) {
+            continue;
+          }
+          if (!this.connects(x, y, sDir)) continue;
+          if (this.isRed(n.x, n.y)) {
+            continue;
+          }
+
+          this.solveNode(n.x, n.y, depth + 1, maxDepth);
+        }
+      } catch (err) {
+        _didIteratorError2 = true;
+        _iteratorError2 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion2 && _iterator2.return) {
+            _iterator2.return();
+          }
+        } finally {
+          if (_didIteratorError2) {
+            throw _iteratorError2;
+          }
+        }
+      }
+
+      var connectionCount = 0;
+      var redCount = 0;
+      var _iteratorNormalCompletion3 = true;
+      var _didIteratorError3 = false;
+      var _iteratorError3 = undefined;
+
+      try {
+        for (var _iterator3 = dirs[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+          var _sDir = _step3.value;
+
+          var _n = this.getNeighbor(x, y, _sDir);
+          if (_n === null) {
+            continue;
+          }
+          if (!this.connects(x, y, _sDir)) continue;
+          connectionCount++;
+          if (this.isRed(_n.x, _n.y)) {
+            redCount++;
+            continue;
+          }
+        }
+
+        // redCount = neighbors marked as red
+        // connectionCount = neighbors connected
+        // diff = connectionCount - redCount
+        // if diff == 1
+      } catch (err) {
+        _didIteratorError3 = true;
+        _iteratorError3 = err;
+      } finally {
+        try {
+          if (!_iteratorNormalCompletion3 && _iterator3.return) {
+            _iterator3.return();
+          }
+        } finally {
+          if (_didIteratorError3) {
+            throw _iteratorError3;
+          }
+        }
+      }
+
+      var diff = connectionCount - redCount;
+      // console.log(`[${x}, ${y}] connections: ${connectionCount}, red: ${redCount}`)
+      if (diff === 1) {
+        if (!this.isGreen(x, y)) {
+          this.markRed(x, y);
+        }
+      } else {
+        this.markGreen(x, y);
+      }
+    },
+
+    // leave undocumented for now
+    carveMaze: function carveMaze(x, y, depth, maxDepth) {
+
+      if (depth >= maxDepth) {
+        console.warn("MAXIMUM DEPTH REACHED: %d", maxDepth);
+        return;
+      }
+
+      if (!this.isCell(x, y)) {
+        return;
+      }
+      var dirs = this.getShuffledNeighborDirs(x, y);
+      for (var key in dirs) {
+        var sDir = dirs[key];
+        var n = this.getNeighbor(x, y, sDir);
+        if (n === null) {
+          continue;
+        }
+
+        if (this.isMasked(n.x, n.y)) {
+          continue;
+        }
+
+        if (this.isCell(n.x, n.y) && !this.hasConnections(n.x, n.y)) {
+          // Connect cell to neighbor
+          this.connectUndirected(x, y, sDir);
+          this.carveMaze(n.x, n.y, depth + 1, maxDepth);
+        }
+      }
+    },
+
+    /**
+      * Method called after [generate]{@link module:maze-generator-core#generate} generates a maze.
+      * <b>This should be overriden by derived class</b>.
+      * The spec parameter will be passed on to this method after the maze has been generated.
+      * The derived method should parse spec for needed values.
+      * @param {Object} spec Named parameters for method
+      * @function
+      * @instance
+      * @memberof module:maze-generator-core
+      * @example <caption>possible usage</caption>
+      * // A derived object would have an afterGenerate method that parses spec.open
+      * let spec = {
+      *    open: [
+      *      { border: "N", list: [ 0, 2 ] },
+      *      { border: "S", list: [ 3 ] }
+      *    ]
+      * };
+      * mazeGenerator.generate(spec);
+      */
+    afterGenerate: function afterGenerate(spec) {
+      // derived class should override
+    },
+
+    /** Generators a maze
+      * @param {Object} options Named parameters for generating a maze
+      * @param {Array} options.mask An array of cells to mask off from maze generation
+      * @param {Array} options.open An array of objects designation what borders to open after generation
+      * @param {Object} opions.start An object containing the x and y parameter of a cell to start maze generation from.
+      * @function
+      * @instance
+      * @memberof module:maze-generator-core
+      * @returns {boolean}
+      * @example <caption>generate</caption>
+      * maze.generate();
+      * @example <caption>mask</caption>
+      * let spec = {
+      *    mask: [
+      *      { c: 2, r: 3 },
+      *      { c: 2, r: 4 }
+      *    ]
+      * };
+      * mazeGenerator.generate(spec);
+      * @example <caption>start and mask</caption>
+      * let spec = {
+      *    start: { c: 3, r: 3 },
+      *    mask: [
+      *      { c: 0, r: 0 },
+      *      { c: 0, r: 1 },
+      *      { c: 1, r: 0 },
+      *      { c: 1, r: 1 }
+      *    ]
+      * };
+      * mazeGenerator.generate(spec);
+      */
+    generate: function generate(spec) {
+
+      spec = spec || {};
+
+      var aMask = spec.mask || [],
+          start = spec.start || {},
+          x = start.c || 0,
+          y = start.r || 0;
+
+      this.fill(0);
+
+      for (var mKey in aMask) {
+        var mask = aMask[mKey];
+        this.mask(mask.c, mask.r);
+      }
+
+      var maxDepth = this.xSize * this.ySize;
+
+      this.carveMaze(x, y, 0, maxDepth);
+
+      // derived class can parse extra spec parameters
+
+      this.afterGenerate(spec);
+    }
+  });
 };
 
 },{}]},{},[1])(1)
@@ -1551,10 +1693,6 @@ module.exports.create = function () {
       // print top north walls
 
       var border = "";
-      // var lim = _x  * 2;
-      // for( var i = 0; i < lim; i++ ) {
-      //     border += i === 0 ? " " : this.connects(i,0,"N") ? " " : "_";
-      // }
       for (var i = 0; i < _x; i++) {
         border += i === 0 ? " " : "";
         border += this.connects(i, 0, "N") ? "  " : "__";
@@ -1566,10 +1704,11 @@ module.exports.create = function () {
         var row = this.connects(0, my, "W") ? " " : "|";
         for (var mx = 0; mx < _x; mx++) {
           var isTarget = tX == mx && tY == my;
+          var isGreen = this.isGreen(mx, my);
           // See Unicode characters: https://jrgraphix.net/r/Unicode/2300-23FF
           // https://jrgraphix.net/r/Unicode/2500-257F
-          var southClosed = isTarget ? "\u23C2" : "_";
-          var southOpen = isTarget ? "\u25BC" : " ";
+          var southClosed = isTarget ? "\u23C2" : isGreen ? "\u235C" : "_";
+          var southOpen = isTarget ? "\u25BC" : isGreen ? "\u233E" : " ";
           row += this.connects(mx, my, "S") ? southOpen : southClosed;
           if (this.connects(mx, my, "E")) {
             row += ((this.get(mx, my) | this.get(mx + 1, my)) & dirMap.S) !== 0 ? " " : "_";

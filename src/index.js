@@ -216,10 +216,6 @@ module.exports.create = (spec = {}) => {
       let { x: tX = -1, y: tY = -1 } = target;
       // print top north walls
       var border = "";
-      // var lim = _x  * 2;
-      // for( var i = 0; i < lim; i++ ) {
-      //     border += i === 0 ? " " : this.connects(i,0,"N") ? " " : "_";
-      // }
       for (var i = 0; i < _x; i++) {
         border += (i === 0 ? " " : "");
         border += this.connects(i, 0, "N") ? "  " : "__";
@@ -231,10 +227,11 @@ module.exports.create = (spec = {}) => {
         var row = this.connects(0, my, "W") ? " " : "|";
         for (var mx = 0; mx < _x; mx++) {
           let isTarget = (tX == mx && tY == my);
+          let isGreen = this.isGreen(mx, my);
           // See Unicode characters: https://jrgraphix.net/r/Unicode/2300-23FF
           // https://jrgraphix.net/r/Unicode/2500-257F
-          let southClosed = isTarget ? "\u23C2" : "_";
-          let southOpen = isTarget ? "\u25BC" : " ";  
+          let southClosed = isTarget ? "\u23C2" : isGreen ? "\u235C" : "_";
+          let southOpen = isTarget ? "\u25BC" : isGreen ? "\u233E" : " ";  
           row += this.connects(mx, my, "S") ? southOpen : southClosed;
           if (this.connects(mx, my, "E")) {
             row += (((this.get(mx, my) | this.get(mx + 1, my)) & dirMap.S) !== 0) ? " " : "_";
