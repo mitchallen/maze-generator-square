@@ -21,7 +21,7 @@
   "author": "Mitch Allen <npm@mitchallen.com> (http://mitchallen.com)",
   "license": "MIT",
   "dependencies": {
-    "@mitchallen/connection-grid-square": "^0.1.13",
+    "@mitchallen/connection-grid-square": "^0.1.14",
     "@mitchallen/maze-generator-core": "^0.1.10"
   },
   "devDependencies": {
