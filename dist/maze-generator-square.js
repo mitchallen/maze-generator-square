@@ -347,6 +347,21 @@ module.exports.create = function (spec) {
       // return this.set(x, y, this.get(x, y) & ~MASKED);
       return this.clearFlag(x, y, MASKED);
     },
+    /** Clear all mask flags from grid
+      * @function
+      * @instance
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * core.clearAllMasks();
+     */
+    clearAllMasks: function clearAllMasks() {
+      for (var row = 0; row < this.rows; row++) {
+        var rs = this.rowSize(row);
+        for (var pos = 0; pos < rs; pos++) {
+          this.clearMask(row, pos);
+        }
+      }
+    },
     /** Returns true if a cell at x,y has been marked using [mask]{@link module:connection-grid-core#mask}.
       * @param {number} x The x coordinate
       * @param {number} y The y coordinate
@@ -391,6 +406,21 @@ module.exports.create = function (spec) {
     clearRed: function clearRed(x, y) {
       return this.clearFlag(x, y, RED);
     },
+    /** Clear all red flags from grid
+      * @function
+      * @instance
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * core.clearAllRed();
+     */
+    clearAllRed: function clearAllRed() {
+      for (var row = 0; row < this.rows; row++) {
+        var rs = this.rowSize(row);
+        for (var pos = 0; pos < rs; pos++) {
+          this.clearRed(row, pos);
+        }
+      }
+    },
     /** Returns true if a cell at x,y has been set red using [markRed]{@link module:connection-grid-core#markRed}.
       * @param {number} x The x coordinate
       * @param {number} y The y coordinate
@@ -433,6 +463,21 @@ module.exports.create = function (spec) {
      */
     clearGreen: function clearGreen(x, y) {
       return this.clearFlag(x, y, GREEN);
+    },
+    /** Clear all green flags from grid
+      * @function
+      * @instance
+      * @memberof module:connection-grid-core
+      * @example <caption>usage</caption>
+      * core.clearAllGreen();
+     */
+    clearAllGreen: function clearAllGreen() {
+      for (var row = 0; row < this.rows; row++) {
+        var rs = this.rowSize(row);
+        for (var pos = 0; pos < rs; pos++) {
+          this.clearGreen(row, pos);
+        }
+      }
     },
     /** Returns true if a cell at x,y has been set green using [markGreen]{@link module:connection-grid-core#markGreen}.
       * @param {number} x The x coordinate
