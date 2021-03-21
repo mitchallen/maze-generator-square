@@ -417,4 +417,19 @@ describe('module', function () {
     mazeGenerator.printBoard({ target: d });
     done();
   });
+
+  it('depth function for maze', function (done) {
+    let size = { x: 25, y: 25 }
+    var mazeGenerator = _module.create(size);
+    should.exist(mazeGenerator);
+    let options = {
+      start: { c: 0, r: 0 },
+      depthFunction: function (depth, maxDepth) { 
+        return depth > 5 || depth >= maxDepth; 
+      }
+    }
+    mazeGenerator.generate(options);
+    mazeGenerator.printBoard();
+    done();
+  });
 });
