@@ -45,5 +45,8 @@
     "should": "^10.0.0",
     "supertest": "^6.0.1",
     "yargs-parser": "^20.2.4"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   }
 }
