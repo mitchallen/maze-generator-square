@@ -4,15 +4,10 @@
   "description": "square maze generator",
   "main": "dist/maze-generator-square.js",
   "scripts": {
-    "//": "Usage:> [PORT=8002] npm run web-server",
-    "start": "node dist/maze-generator-square.js",
-    "test": "grunt && mocha --recursive --timeout 20000",
-    "test-coverage": "./node_modules/.bin/istanbul cover _mocha -- -R spec test/**/*",
-    "test-nodemon": "nodemon /usr/local/bin/mocha --recursive --timeout 5000",
-    "test-square": "grunt && mocha test/square/ --recursive --timeout 5000",
-    "test-debug": "grunt && mocha -g '@DEBUG' --recursive --timeout 20000",
-    "test-jenkins": "grunt && mocha --recursive --timeout 20000 -R xunit test/ > test-reports.xml",
-    "web-server": "python -m SimpleHTTPServer $PORT || 8000"
+    "build": "node build.js",
+    "test": "npm run build && mocha --recursive --timeout 20000",
+    "test-square": "npm run build && mocha test/square/ --recursive --timeout 5000",
+    "test-debug": "npm run build && mocha -g '@DEBUG' --recursive --timeout 20000"
   },
   "repository": {
     "type": "git",
@@ -25,26 +20,14 @@
     "@mitchallen/maze-generator-core": "^0.1.13"
   },
   "devDependencies": {
-    "babel-preset-es2015": "^6.18.0",
-    "babelify": "^10.0.0",
-    "browserify-derequire": "^1.1.1",
-    "deep-extend": "^0.6.0",
-    "diff": "^5.0.0",
-    "growl": "^1.10.5",
-    "grunt": "^1.0.1",
-    "grunt-browserify": "^5.0.0",
-    "grunt-bump": "^0.8.0",
-    "grunt-contrib-jshint": "^3.2.0",
-    "grunt-contrib-uglify": "^2.0.0",
-    "grunt-contrib-watch": "^1.0.0",
-    "grunt-jsdoc-to-markdown": "^6.0.0",
-    "grunt-shell": "^1.3.0",
-    "handlebars": "^4.7.6",
-    "istanbul": "^0.4.5",
-    "mocha": "^10.2.0",
+    "esbuild": "^0.25.5",
+    "mocha": "^11",
     "should": "^10.0.0",
-    "supertest": "^6.0.1",
-    "yargs-parser": "^20.2.4"
+    "supertest": "^6.0.1"
+  },
+  "overrides": {
+    "diff": "^8.0.4",
+    "serialize-javascript": "^7.0.5"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
