@@ -20,16 +20,20 @@
     "@mitchallen/maze-generator-core": "^0.1.13"
   },
   "devDependencies": {
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.28.1",
     "mocha": "^11",
     "should": "^10.0.0",
     "supertest": "^6.0.1"
   },
   "overrides": {
     "diff": "^8.0.4",
-    "serialize-javascript": "^7.0.5"
+    "serialize-javascript": "^7.0.5",
+    "esbuild": "^0.28.1"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
+  },
+  "allowScripts": {
+    "esbuild@0.28.1": true
   }
 }
