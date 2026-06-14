@@ -20,7 +20,7 @@
     "@mitchallen/maze-generator-core": "^0.1.13"
   },
   "devDependencies": {
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.28.1",
     "mocha": "^11",
     "should": "^10.0.0",
     "supertest": "^6.0.1"
