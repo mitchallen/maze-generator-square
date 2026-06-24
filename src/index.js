@@ -13,7 +13,7 @@ var cgFactory = require("@mitchallen/connection-grid-square"),
 
 
 /**
- * Maze Generator Core {@link https://www.npmjs.com/package/@mitchallen/maze-generator-core|npm documentation}
+ * Maze Generator Core {@link https://github.com/mitchallen/maze-generator-core|documentation}
  * @module maze-generator-core
  */
 

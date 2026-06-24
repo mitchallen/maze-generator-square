@@ -13,11 +13,11 @@ square maze generator
     <img src="https://codecov.io/gh/mitchallen/maze-generator-square/branch/master/graph/badge.svg" alt="Coverage Status">
   </a>
   
-  <a href="https://npmjs.org/package/@mitchallen/maze-generator-square">
-    <img src="http://img.shields.io/npm/v/@mitchallen/maze-generator-square.svg?style=flat-square" alt="Version">
+  <a href="https://github.com/mitchallen/maze-generator-square/pkgs/npm/maze-generator-square">
+    <img src="https://img.shields.io/github/v/tag/mitchallen/maze-generator-square.svg?label=version" alt="Version">
   </a>
   
-  <a href="https://npmjs.org/package/@mitchallen/maze-generator-square">
+  <a href="https://github.com/mitchallen/maze-generator-square/blob/master/LICENSE">
     <img src="https://img.shields.io/github/license/mitchallen/maze-generator-square.svg">
   </a>
   
@@ -25,11 +25,19 @@ square maze generator
 
 ## Installation
 
-You must use __npm__ __2.7.0__ or higher because of the scoped package name.
+This package is published to the **GitHub Packages** registry, not npmjs.
 
-    $ npm init
+Add an `.npmrc` to your project so the `@mitchallen` scope resolves to GitHub
+Packages, then authenticate with a personal access token that has the
+`read:packages` scope:
+
+    @mitchallen:registry=https://npm.pkg.github.com
+    //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+
+Then install:
+
     $ npm install @mitchallen/maze-generator-square --save
-  
+
 * * *
 
 ## Usage

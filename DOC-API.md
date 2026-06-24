@@ -2,7 +2,7 @@
 
 <dl>
 <dt><a href="#module_maze-generator-core">maze-generator-core</a></dt>
-<dd><p>Maze Generator Core <a href="https://www.npmjs.com/package/@mitchallen/maze-generator-core">npm documentation</a></p>
+<dd><p>Maze Generator Core <a href="https://github.com/mitchallen/maze-generator-core">documentation</a></p>
 </dd>
 <dt><a href="#module_maze-generator-square">maze-generator-square</a> ⇐ <code><a href="#module_maze-generator-core">maze-generator-core</a></code></dt>
 <dd><p>Square Maze Generator</p>
@@ -15,7 +15,7 @@
 <a name="module_maze-generator-core"></a>
 
 ## maze-generator-core
-Maze Generator Core [npm documentation](https://www.npmjs.com/package/@mitchallen/maze-generator-core)
+Maze Generator Core [documentation](https://github.com/mitchallen/maze-generator-core)
 
 <a name="module_maze-generator-square"></a>
 
