@@ -22,13 +22,13 @@
   "devDependencies": {
     "esbuild": "^0.28.1",
     "mocha": "^11",
-    "should": "^10.0.0",
-    "supertest": "^6.0.1"
+    "should": "^13.2.3"
   },
   "overrides": {
     "diff": "^8.0.4",
     "serialize-javascript": "^7.0.5",
-    "esbuild": "^0.28.1"
+    "esbuild": "^0.28.1",
+    "js-yaml": "^4.2.0"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
