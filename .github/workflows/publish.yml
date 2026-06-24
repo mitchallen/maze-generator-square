@@ -25,6 +25,14 @@ jobs:
 
       - run: npm test
 
-      - run: npm publish
+      - name: Publish if version is not already on the registry
+        run: |
+          NAME=$(node -p "require('./package.json').name")
+          VERSION=$(node -p "require('./package.json').version")
+          if npm view "$NAME@$VERSION" version --registry=https://npm.pkg.github.com >/dev/null 2>&1; then
+            echo "$NAME@$VERSION already published to GitHub Packages; skipping."
+          else
+            npm publish
+          fi
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
