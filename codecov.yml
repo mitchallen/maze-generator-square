@@ -1,0 +1,10 @@
+# Measure coverage on source files only.
+# Exclude build output, tests, and tooling so carried-forward bundle
+# coverage can't drag the total below 100%.
+ignore:
+  - "dist"
+  - "test"
+  - "examples"
+  - "build.js"
+  - "esbuild.config.js"
+  - "eslint.config.js"
