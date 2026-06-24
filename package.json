@@ -6,6 +6,7 @@
   "scripts": {
     "build": "node build.js",
     "test": "npm run build && mocha --recursive --timeout 20000",
+    "coverage": "npm run build && c8 --include='src/**' --reporter=lcovonly --reporter=text mocha --recursive --timeout 20000",
     "test-square": "npm run build && mocha test/square/ --recursive --timeout 5000",
     "test-debug": "npm run build && mocha -g '@DEBUG' --recursive --timeout 20000"
   },
@@ -20,6 +21,7 @@
     "@mitchallen/maze-generator-core": "^0.1.13"
   },
   "devDependencies": {
+    "c8": "^10.1.3",
     "esbuild": "^0.28.1",
     "mocha": "^11",
     "should": "^13.2.3"

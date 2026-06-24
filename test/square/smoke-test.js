@@ -10,8 +10,8 @@
 "use strict";
 
 var should = require('should'),
-  modulePath = "../../dist/maze-generator-square";
-  // modulePath = "../../src/index";
+  modulePath = "../../src/index";
+  // modulePath = "../../dist/maze-generator-square";
 
 describe('module', function () {
 
