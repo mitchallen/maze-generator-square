@@ -25,18 +25,30 @@ square maze generator
 
 ## Installation
 
-This package is published to the **GitHub Packages** registry, not npmjs.
+This package — and its entire `@mitchallen` dependency chain — is published to
+the **GitHub Packages** registry, not npmjs.
 
-Add an `.npmrc` to your project so the `@mitchallen` scope resolves to GitHub
-Packages, then authenticate with a personal access token that has the
-`read:packages` scope:
+GitHub Packages requires authentication for **every** install, even though
+these packages are public. You need a GitHub personal access token with the
+`read:packages` scope (classic PAT, or fine-grained with Packages: read).
 
-    @mitchallen:registry=https://npm.pkg.github.com
-    //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+1. Export your token:
 
-Then install:
+       export NODE_AUTH_TOKEN=ghp_your_token_here
 
-    $ npm install @mitchallen/maze-generator-square --save
+2. Add an `.npmrc` to your project so the whole `@mitchallen` scope resolves
+   from GitHub Packages and authenticates with that token:
+
+       @mitchallen:registry=https://npm.pkg.github.com
+       //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+
+3. Install:
+
+       $ npm install @mitchallen/maze-generator-square --save
+
+> Tip: if you already use the GitHub CLI, you can mint a token on the fly with
+> `export NODE_AUTH_TOKEN="$(gh auth token)"` (after
+> `gh auth refresh --scopes read:packages`).
 
 * * *
 
