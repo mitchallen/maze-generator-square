@@ -32,23 +32,27 @@ GitHub Packages requires authentication for **every** install, even though
 these packages are public. You need a GitHub personal access token with the
 `read:packages` scope (classic PAT, or fine-grained with Packages: read).
 
-1. Export your token:
-
-       export NODE_AUTH_TOKEN=ghp_your_token_here
-
-2. Add an `.npmrc` to your project so the whole `@mitchallen` scope resolves
-   from GitHub Packages and authenticates with that token:
+1. Route the `@mitchallen` scope to GitHub Packages in your project `.npmrc`.
+   This line has no secret and is safe to commit:
 
        @mitchallen:registry=https://npm.pkg.github.com
-       //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+
+2. Add your token to your **user** `~/.npmrc` so it never lands in the repo:
+
+       npm config set //npm.pkg.github.com/:_authToken=YOUR_TOKEN --location=user
+
+   Do **not** put the `_authToken` line in the project `.npmrc` — if it is
+   committed, your token is exposed. In CI, set the `NODE_AUTH_TOKEN`
+   environment variable and reference it with
+   `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}` instead.
 
 3. Install:
 
        $ npm install @mitchallen/maze-generator-square --save
 
-> Tip: if you already use the GitHub CLI, you can mint a token on the fly with
-> `export NODE_AUTH_TOKEN="$(gh auth token)"` (after
-> `gh auth refresh --scopes read:packages`).
+> Tip: with the GitHub CLI you can use
+> `npm config set //npm.pkg.github.com/:_authToken="$(gh auth token)" --location=user`
+> (after `gh auth refresh --scopes read:packages`).
 
 * * *
 
