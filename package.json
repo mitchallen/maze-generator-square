@@ -3,6 +3,9 @@
   "version": "0.1.25",
   "description": "square maze generator",
   "main": "dist/maze-generator-square.js",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "build": "node build.js",
     "test": "npm run build && mocha --recursive --timeout 20000",
