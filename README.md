@@ -80,7 +80,7 @@ Example:
         <meta charset="utf-8">
         <title>Maze Generator Square Example</title>
         <meta name="description" content="Maze Generator Square Example">
-        <script src="https://cdn.jsdelivr.net/gh/mitchallen/maze-generator-square@v0.1.23/dist/maze-generator-square.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/gh/mitchallen/maze-generator-square@v0.1.26/dist/maze-generator-square.min.js"></script>
         <script>
           var factory = window.MitchAllen.MazeGeneratorSquare;
           console.log(factory);
