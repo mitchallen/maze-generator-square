@@ -1,3 +1,9 @@
+> **This repository is archived.** `@mitchallen/maze-generator-square` is now developed and
+> published from the [maze-generator-v2](https://github.com/mitchallen/maze-generator-v2)
+> monorepo, in [`packages/maze-generator-square`](https://github.com/mitchallen/maze-generator-v2/tree/main/packages/maze-generator-square).
+> The package name and install instructions are unchanged; new versions come
+> from there.
+
 @mitchallen/maze-generator-square
 ==
 square maze generator
