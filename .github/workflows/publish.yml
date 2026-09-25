@@ -18,14 +18,17 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: '24'
-          registry-url: 'https://npm.pkg.github.com'
-          scope: '@mitchallen'
+
+      # Authenticate to GitHub Packages without setup-node's registry-url/scope
+      # inputs, which write a scope mapping that breaks npm ci.
+      - run: echo '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}' >> ~/.npmrc
 
       - run: npm install
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - run: npm test
+      # Runs the tests and fails unless coverage is 100%.
+      - run: npm run coverage
 
       - name: Verify the tag matches package.json
         if: github.event_name == 'push'

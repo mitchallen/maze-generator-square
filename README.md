@@ -9,8 +9,8 @@ square maze generator
     <img src="https://github.com/mitchallen/maze-generator-square/actions/workflows/ci.yml/badge.svg" alt="Build Status">
   </a>
   
-  <a href="https://codecov.io/gh/mitchallen/maze-generator-square">
-    <img src="https://codecov.io/gh/mitchallen/maze-generator-square/branch/main/graph/badge.svg" alt="Coverage Status">
+  <a href="https://github.com/mitchallen/maze-generator-square/actions/workflows/ci.yml?query=branch%3Amain">
+    <img src="https://img.shields.io/badge/coverage-100%25-brightgreen" alt="Coverage: 100%">
   </a>
   
   <a href="https://github.com/mitchallen/maze-generator-square/pkgs/npm/maze-generator-square">
@@ -27,6 +27,8 @@ square maze generator
 
 This package — and its entire `@mitchallen` dependency chain — is published to
 the **GitHub Packages** registry, not npmjs.
+
+Versions **0.1.24** and earlier remain on npmjs.org and are no longer updated there.
 
 GitHub Packages requires authentication for **every** install, even though
 these packages are public. You need a GitHub personal access token with the

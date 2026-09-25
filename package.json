@@ -9,7 +9,7 @@
   "scripts": {
     "build": "node build.js",
     "test": "npm run build && mocha --recursive --timeout 20000",
-    "coverage": "npm run build && c8 --include='src/**' --reporter=lcovonly --reporter=text mocha --recursive --timeout 20000",
+    "coverage": "npm run build && c8 --check-coverage --100 --include='src/**' --reporter=text mocha --recursive --timeout 20000",
     "test-square": "npm run build && mocha test/square/ --recursive --timeout 5000",
     "test-debug": "npm run build && mocha -g '@DEBUG' --recursive --timeout 20000"
   },
