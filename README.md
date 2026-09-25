@@ -10,14 +10,14 @@ square maze generator
   </a>
   
   <a href="https://codecov.io/gh/mitchallen/maze-generator-square">
-    <img src="https://codecov.io/gh/mitchallen/maze-generator-square/branch/master/graph/badge.svg" alt="Coverage Status">
+    <img src="https://codecov.io/gh/mitchallen/maze-generator-square/branch/main/graph/badge.svg" alt="Coverage Status">
   </a>
   
   <a href="https://github.com/mitchallen/maze-generator-square/pkgs/npm/maze-generator-square">
     <img src="https://img.shields.io/github/v/tag/mitchallen/maze-generator-square.svg?label=version" alt="Version">
   </a>
   
-  <a href="https://github.com/mitchallen/maze-generator-square/blob/master/LICENSE">
+  <a href="https://github.com/mitchallen/maze-generator-square/blob/main/LICENSE">
     <img src="https://img.shields.io/github/license/mitchallen/maze-generator-square.svg">
   </a>
   
